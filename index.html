@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map with MultiPolygon</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map { height: 600px; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-geometryutil@0.7.0/leaflet.geometryutil.js"></script>
+
+<script>
+    var map = L.map('map').setView([-6.2088, 106.8456], 12); // Jakarta coordinates
+
+    // Base Layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // GeoJSON data for MultiPolygon
+    var multiPolygonData = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "MultiPolygon",
+                    "coordinates": [
+                        [
+                            [
+                                [106.8417, -6.2177],
+                                [106.8436, -6.2177],
+                                [106.8436, -6.2155],
+                                [106.8417, -6.2155],
+                                [106.8417, -6.2177]
+                            ]
+                        ],
+                        [
+                            [
+                                [106.8427, -6.2197],
+                                [106.8446, -6.2197],
+                                [106.8446, -6.2175],
+                                [106.8427, -6.2175],
+                                [106.8427, -6.2197]
+                            ]
+                        ]
+                    ]
+                },
+                "properties": {
+                    "name": "Location 1"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "MultiPolygon",
+                    "coordinates": [
+                        [
+                            [
+                                [106.8470, -6.2085],
+                                [106.8490, -6.2085],
+                                [106.8490, -6.2065],
+                                [106.8470, -6.2065],
+                                [106.8470, -6.2085]
+                            ]
+                        ],
+                        [
+                            [
+                                [106.8480, -6.2095],
+                                [106.8500, -6.2095],
+                                [106.8500, -6.2075],
+                                [106.8480, -6.2075],
+                                [106.8480, -6.2095]
+                            ]
+                        ]
+                    ]
+                },
+                "properties": {
+                    "name": "Location 2"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "MultiPolygon",
+                    "coordinates": [
+                        [
+                            [
+                                [106.8420, -6.2100],
+                                [106.8440, -6.2100],
+                                [106.8440, -6.2080],
+                                [106.8420, -6.2080],
+                                [106.8420, -6.2100]
+                            ]
+                        ],
+                        [
+                            [
+                                [106.8430, -6.2110],
+                                [106.8450, -6.2110],
+                                [106.8450, -6.2090],
+                                [106.8430, -6.2090],
+                                [106.8430, -6.2110]
+                            ]
+                        ]
+                    ]
+                },
+                "properties": {
+                    "name": "Location 3"
+                }
+            }
+        ]
+    };
+
+    // Add GeoJSON layer to the map
+    L.geoJSON(multiPolygonData, {
+        style: function (feature) {
+            return {
+                color: 'blue',
+                weight: 2,
+                opacity: 0.6
+            };
+        },
+        onEachFeature: function (feature, layer) {
+            if (feature.properties && feature.properties.name) {
+                layer.bindPopup(feature.properties.name);
+            }
+        }
+    }).addTo(map);
+
+    // Fit map bounds to the GeoJSON layer
+    var bounds = L.geoJSON(multiPolygonData).getBounds();
+    map.fitBounds(bounds);
+</script>
+
+</body>
+</html>

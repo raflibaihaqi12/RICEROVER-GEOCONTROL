@@ -1,0 +1,13 @@
+revisi di form add lahan
+	- hapus nama kelompok tani
+	- hapus nomor kartu tani
+
+	-> ini di hapus tapi nanti di pindah datanya ke table user dengan role penggarap
+
+	- luas lahan dari geojson
+	- isi lahan dropdown pilihannya (padi, jagung, cabe)
+	- denah lahan dari geojson
+
+di admin ngubah supaya tiap alokasi bisa lebih dari 1 pupuk
+penambahan automasi alokasi pupuk (perlu konfirmasi)
+di alokasi pupuk tambahkan kolom jabatan penanggung jawab
